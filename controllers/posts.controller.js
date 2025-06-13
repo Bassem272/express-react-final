@@ -34,20 +34,23 @@ export async function getPostById(req, res, next) {
 
 export async function addPost(req, res, next) {
   // console.log(__dirname);
-  
-  try {
-    const localImagePath = req.file?.path;
-    console.log("inside add post", req.file);
-    
-// const imageUrl = await postService.uploadToCloudflareFromBuffer(req.file.buffer, req.file.originalname);
 
-    // const cloudflareUrl = await postService.uploadToCloudflare(localImagePath); // Upload to Cloudflare
-const imageUrl = await postService.uploadToFireBase(req.file)
-console.log("image url ====> ", imageUrl)
+  try {
+    // const localImagePath = req.file?.path;
+    console.log("req----------body", req.body.image);
+    // if(!req.file){
+    //   throw new Error("no file in req.file is provided")
+    // }
+    // console.log("inside add post", req.file);
+
+    const imageUrl = req.file
+      ? await postService.uploadToFireBase(req.file)
+      : null;
+    console.log("image url ====> ", imageUrl);
     const data = {
       author: req.body.author,
       title: req.body.title,
-      image: imageUrl? imageUrl:"errornot saved ",
+      image: imageUrl ? imageUrl : "errornot saved ",
       // coverImage: req.file ? req.file.path : undefined,
       content: req.body.content,
       createdBy: req.body.createdBy,
@@ -63,7 +66,17 @@ export async function updatePost(req, res, next) {
   try {
     const id = req.params.id;
     const data = req.body;
-    const updatedPost = await postService.updatePost(id, data);
+    if (!data) throw new Error("No data was provided to be edited");
+    const newPost = {
+      ...data,
+    };
+    if (req.file) {
+      const imageUrl = await postService.uploadToFireBase(req.file);
+      newPost.image = imageUrl;
+    }
+    console.log("Updated post payload:", newPost, "for ID:", id);
+    console.log("body of the request'", data, id);
+    const updatedPost = await postService.updatePost(id, newPost);
 
     return res.status(201).json(updatedPost);
   } catch (err) {
@@ -74,6 +87,7 @@ export async function updatePost(req, res, next) {
 export async function deletePost(req, res, next) {
   try {
     const id = req.params.id;
+    console.log(" controller ", id)
     const message = await postService.deletePost(id);
     if (!message) {
       return next(errorBuilder.createNotFound("Post not found."));

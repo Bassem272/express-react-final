@@ -48,7 +48,7 @@ export async function addBook(req, res, next) {
   }
 }
 
-export async function updateBook(req, res, next) {
+export async function updateBook(req, res, next) { 
   try {
     const id = req.params.id;
     const data = req.body; 

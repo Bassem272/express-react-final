@@ -29,7 +29,7 @@ export const generateToken = async function (user) {
   } catch (error) {
     throw error;
   }
-};
+}; 
 export const renewToken = async function (payload) {
   try {
     const user = await User.findUserByEmail(payload.email)

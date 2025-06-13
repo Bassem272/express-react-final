@@ -9,14 +9,14 @@ export const postValidation = [
   body("author")
     .notEmpty()
     .withMessage("Must not be empty")
-    .isLength({ min: 6 })
+    .isLength({ min: 3 })
     .withMessage("length must be at least 3 chars"),
   ,
   body("content")
     .notEmpty()
     .withMessage("Must not be empty")
-    .isLength({ min: 100 })
-    .withMessage("Content must be at least 100 chars"),
+    // .isLength({ min: 100 })
+    // .withMessage("Content must be at least 100 chars"),
   ,
   body("createdBy")
     .notEmpty()

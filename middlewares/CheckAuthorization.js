@@ -45,7 +45,7 @@ export const checkAdminOrOwner = async (req, res, next) => {
     if (!book) {
       return next(errorBuilder.createNotFound("Book not found!"));
     }
-console.log(user.id, book.createdBy.toString() )
+// console.log(user.id, book.createdBy.toString() )
     if (book.createdBy.toString() !== user.id) {
       return next(errorBuilder.createUnauthorizedError("Only owner or admin can access this book!"));
     }

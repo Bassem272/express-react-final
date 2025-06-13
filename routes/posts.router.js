@@ -6,31 +6,36 @@ import {
   updatePost,
   deletePost,
 } from "../controllers/posts.controller.js";
-import upload from "../middlewares/MulterMiddleware.js";
 import { checkLogin } from "../middlewares/CheckLoggedIn.js";
 import { checkAdmin , checkOwner, checkAdminOrOwner} from "../middlewares/CheckAuthorization.js";
 import {postValidation} from "../validators/post.validator.js"
 import { validate } from "../middlewares/ValidateMiddleware.js";
+// import upload from "../middlewares/MulterMiddleware.js";
+import multer from "multer";
+import { uploadWithFile, uploadNoFile } from "../middlewares/MulterMiddleware.js";
+
+// const upload = multer(); 
 
 const PostsRouter = express.Router();
 
 PostsRouter.use(checkLogin);
 
-PostsRouter.get("/", checkAdmin, getAll);
+PostsRouter.get("/", getAll);
 
-PostsRouter.get("/:id", checkAdminOrOwner, getPostById);
+PostsRouter.get("/:id", getPostById);
 
 // PostsRouter.post("/", postValidation , validate ,upload.single("image"),checkAdminOrOwner,  addPost);
 PostsRouter.post(
   "/",
   // checkAdminOrOwner,     // 🔐 Authentication/Authorization comes first
-  upload.single("image"), // 📤 File handling comes after
+  // upload.single("image"), // 📤 File handling comes after
+ uploadWithFile.single("image"),
   postValidation,
   validate,
   addPost
 );
-PostsRouter.put("/:id",checkAdminOrOwner, updatePost);
+PostsRouter.put("/:id",uploadWithFile.single("image"), updatePost);
 
-PostsRouter.delete("/:id", checkAdminOrOwner,deletePost);
+PostsRouter.delete("/:id",deletePost);
 
-export default PostsRouter;
+export default PostsRouter; 

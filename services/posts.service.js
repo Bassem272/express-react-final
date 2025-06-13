@@ -4,7 +4,7 @@ const errorBuilder = new ErrorBuilder();
 
 export async function getAll({ query, skip, limit, page }) {
   try {
-    const posts = await Post.find(query).skip(skip).limit(parseInt(limit));
+    const posts = await Post.find(query).sort({ createdAt: -1 }).skip(skip).limit(parseInt(limit));
     const total = await Post.countDocuments(query);
     return {
       posts: posts,
@@ -65,6 +65,7 @@ export async function updatePost(id, data) {
 
 export async function deletePost(id) {
   try {
+    console.log(" service ", id)
     const deleted = await Post.findByIdAndDelete(id);
     if (!deleted) {
       throw errorBuilder.createNotFound("Post to delete not found.");

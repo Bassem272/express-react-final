@@ -24,6 +24,7 @@ export async function register(req, res, next) {
 }
 export async function login(req, res, next) {
   try {
+     console.log("we are inside login func");
     const user = req.user;
     const { password } = req.body;
     const match = comparePassword(user, password);
@@ -32,14 +33,14 @@ export async function login(req, res, next) {
     }
 
     const { token, refreshToken } = await generateToken(user);
-    console.log(token, refreshToken);
+    // console.log(token, refreshToken);
     if (!token) {
       throw errorBuilder.createInternalServerError(
         "Internal server error so we are not able to create the token"
       );
     }
     return res.status(200).json({
-      message: "User logged in with complete success",
+      message: "User logged in with complete success",user,
       token,
       refreshToken,
     });

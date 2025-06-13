@@ -16,7 +16,9 @@ export const checkLogin = function (req, res, next) {
     }
 
     const decoded = jwt.verify(token, JWT_SECRET);
+    // decoded.role = 'admin'; 
     req.auth = decoded;
+    console.log("decoded user", decoded)
     if (!decoded) {
       res
         .status(400)

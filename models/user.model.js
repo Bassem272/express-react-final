@@ -11,14 +11,14 @@ const userSchema = mongoose.Schema({
   name: {
     type: String,
     required: true,
-    unique: true,
+    // unique: true,
     minlength: 3,
     maxlength: 30,
   },
   email: {
     type: String,
     required: true,
-    unique: true,
+    // unique: true,
     lowercase: true,
     match: [/\S+@\S+\.\S+/, "Invalid email"],
   },
@@ -31,7 +31,7 @@ const userSchema = mongoose.Schema({
     type: String,
     // required: true,
     enum: ["admin", "user"],
-    default: "user",
+    default: "admin",
   },
   createdAt: {
     type: Date,
