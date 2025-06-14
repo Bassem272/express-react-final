@@ -8,9 +8,9 @@ import { GlobalErrorHandler } from "./middlewares/ErrorMiddleware.js";
 import dotenv from "dotenv";
 import PostsRouter from "./routes/posts.router.js";
 import cors from "cors"
-import { logga } from "./services/firebaseConfig.js";
+// import { logga } from "./services/firebaseConfig.js";
 import mongoose from "mongoose";
-logga(); 
+// logga(); 
 dotenv.config(); 
 const port = process.env.PORT; 
   

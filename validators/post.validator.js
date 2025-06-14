@@ -14,7 +14,7 @@ export const postValidation = [
   ,
   body("content")
     .notEmpty()
-    .withMessage("Must not be empty")
+    .withMessage("Must not be empty") 
     // .isLength({ min: 100 })
     // .withMessage("Content must be at least 100 chars"),
   ,
