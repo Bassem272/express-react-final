@@ -8,9 +8,8 @@ import { GlobalErrorHandler } from "./middlewares/ErrorMiddleware.js";
 import dotenv from "dotenv";
 import PostsRouter from "./routes/posts.router.js";
 import cors from "cors"
-// import { logga } from "./services/firebaseConfig.js";
 import mongoose from "mongoose";
-// logga(); 
+
 dotenv.config(); 
 const port = process.env.PORT; 
   
@@ -25,6 +24,8 @@ server.use(LoggerMiddleware);
 server.use(morgan("dev")); 
 
 mongoDB.connect() 
+
+// log the status of the mongo db
 mongoose.set('debug', function (collectionName, method, query, doc, options) {
   console.log(`[Mongoose Debug] ${collectionName}.${method}`, JSON.stringify(query), doc, options);
 });

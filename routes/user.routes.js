@@ -18,7 +18,7 @@ const UserRouter = express.Router();
 
 UserRouter.post("/register", registerValidation, validate, register);
 UserRouter.post("/login", loginValidation, validate, checkUser, login);
-// bonus --->  1
+
 UserRouter.post("/refresh-token", renewTokenController);
 UserRouter.post("/logout", logout);
 

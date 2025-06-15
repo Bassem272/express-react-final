@@ -30,11 +30,8 @@ PostsRouter.get("/", getAll);
 PostsRouter.use(checkLogin);
 PostsRouter.get("/:id", getPostById);
 
-// PostsRouter.post("/", postValidation , validate ,upload.single("image"),checkAdminOrOwner,  addPost);
 PostsRouter.post(
   "/",
-  // checkAdminOrOwner,     // 🔐 Authentication/Authorization comes first
-  // upload.single("image"), // 📤 File handling comes after
   uploadWithFile.single("image"),
   postValidation,
   validate,

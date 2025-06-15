@@ -33,7 +33,6 @@ export async function login(req, res, next) {
     }
 
     const { token, refreshToken } = await generateToken(user);
-    // console.log(token, refreshToken);
     if (!token) {
       throw errorBuilder.createInternalServerError(
         "Internal server error so we are not able to create the token"

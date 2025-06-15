@@ -5,7 +5,6 @@ const errorBuilder = new ErrorBuilder();
 
 export async function getAll(req, res, next) {
   try {
-    // bonus --> 2
     const { page = 1, limit = 10, search = "" } = req.query;
     const skip = (page - 1) * limit;
     const query = search ? { title: { $regex: search, $options: "i" } } : {};
@@ -33,16 +32,8 @@ export async function getPostById(req, res, next) {
 }
 
 export async function addPost(req, res, next) {
-  // console.log(__dirname);
 
   try {
-    // const localImagePath = req.file?.path;
-    console.log("req----------body", req.body.image);
-    // if(!req.file){
-    //   throw new Error("no file in req.file is provided")
-    // }
-    // console.log("inside add post", req.file);
-
     const imageUrl = req.file
       ? await postService.uploadToFireBase(req.file)
       : null;
@@ -51,7 +42,6 @@ export async function addPost(req, res, next) {
       author: req.body.author,
       title: req.body.title,
       image: imageUrl ? imageUrl : "errornot saved ",
-      // coverImage: req.file ? req.file.path : undefined,
       content: req.body.content,
       createdBy: req.body.createdBy,
     };

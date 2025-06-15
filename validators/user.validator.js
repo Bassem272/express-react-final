@@ -16,7 +16,6 @@ export const registerValidation = [
     .withMessage("Password is required")
     .isLength({ min: 6 })
     .withMessage("Password must be at least 6 chars"),
-    // body("role").notEmpty().withMessage("role is required").isIn(["user", "admin"]).withMessage("Invalid role")
 ];
 
 export const loginValidation = [

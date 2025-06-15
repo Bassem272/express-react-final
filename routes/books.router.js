@@ -6,7 +6,7 @@ import {
   updateBook,
   deleteBook,
 } from "../controllers/books.controller.js";
-// import upload from "../middlewares/MulterMiddleware.js";
+
 import { checkLogin } from "../middlewares/CheckLoggedIn.js";
 import {
   checkAdmin,

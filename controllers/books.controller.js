@@ -5,7 +5,6 @@ const errorBuilder = new ErrorBuilder();
 
 export async function getAll(req, res, next) {
   try {
-    // bonus --> 2
     const {page = 1, limit = 10, search = ""}  = req.query
     const skip = (page - 1) * limit; 
     const query = search? {title:{$regex:search, $options: "i"}}:{}; 

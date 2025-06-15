@@ -20,7 +20,7 @@ const postSchema = new mongoose.Schema({
     default: 0,
   }
 }, 
-  // bonus --> 3
+
 { timestamps: true }
 ); 
 
