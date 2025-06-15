@@ -28,9 +28,15 @@ mongoDB.connect()
 mongoose.set('debug', function (collectionName, method, query, doc, options) {
   console.log(`[Mongoose Debug] ${collectionName}.${method}`, JSON.stringify(query), doc, options);
 });
+
+server.get("/", (req, res) => {
+  res.send("Backend is working ✅");
+});
+
 server.use("/auth", UserRouter); 
 server.use("/books", BooksRouter); 
 server.use("/posts", PostsRouter); 
+
 
 server.listen(port , ()=> {
     console.log(`The server is running on port ${port}`); 
