@@ -7,6 +7,7 @@ import morgan from "morgan";
 import { GlobalErrorHandler } from "./middlewares/ErrorMiddleware.js";
 import dotenv from "dotenv";
 import PostsRouter from "./routes/posts.router.js";
+import ordersRouter from "./routes/order.router.js";
 import cors from "cors"
 import mongoose from "mongoose";
 
@@ -36,7 +37,8 @@ server.get("/", (req, res) => {
 
 server.use("/auth", UserRouter); 
 server.use("/books", BooksRouter); 
-server.use("/posts", PostsRouter); 
+server.use("/posts", PostsRouter);
+server.use("/orders", ordersRouter); 
 
 
 server.listen(port , ()=> {

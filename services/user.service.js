@@ -13,6 +13,7 @@ export const createUser = async function (data) {
     throw error;
   }
 };
+
 export const comparePassword = async function (user, candidatePassword) {
   try {
     const match = await user.comparePassword(candidatePassword);
@@ -22,6 +23,17 @@ export const comparePassword = async function (user, candidatePassword) {
   }
 };
 
+export const editUser = async function (id, data) {
+  try {
+    const exists = await User.findOne({ _id: id });
+    if (!exists) throw errorBuilder.createNotFound("User not found");
+    const user = await User.findOneAndUpdate({ _id: id }, data, {new: true});
+    console.log("updated user of the new user", user);
+    return user;
+  } catch (error) {
+    throw error;
+  }
+}
 export const generateToken = async function (user) {
   try {
     const { token, refreshToken } = await user.createJWTToken();

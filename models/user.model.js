@@ -18,7 +18,7 @@ const userSchema = mongoose.Schema({
   email: {
     type: String,
     required: true,
-    // unique: true,
+    unique: true,
     lowercase: true,
     match: [/\S+@\S+\.\S+/, "Invalid email"],
   },
@@ -37,8 +37,21 @@ const userSchema = mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+   provider: {
+    type: String,
+    enum: ['google', 'github', 'credentials'],
+    default: 'credentials'
+  },
+  lastLogin: Date
 });
 
+// block password changes for OAuth users
+userSchema.pre('save', function(next) {
+  if (this.isModified('password') && this.isOAuthUser()) {
+    return next(new Error("Password changes not allowed for OAuth users"));
+  }
+  next();
+});
 // before saving the doc
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
@@ -94,6 +107,11 @@ userSchema.methods.renewJWTToken =  function () {
   );
 
   return  token;
+};
+
+// In your User model (user.model.js)
+userSchema.methods.isOAuthUser = function() {
+  return this.provider && this.provider !== 'credentials';
 };
 
 // static method on the collection level
